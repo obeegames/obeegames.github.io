@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OBee Games — Creating Games That Bring Joy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #4169E1;
+            --dark-blue: #1a237e;
+            --light-blue: #E3F2FD;
+            --accent-orange: #FF9800;
+            --text-dark: #2C3E50;
+            --text-gray: #5A6C7D;
+            --white: #FFFFFF;
+            --cream: #FAFAFA;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--white);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--white);
+            padding: 1.5rem 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(65, 105, 225, 0.1);
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-section:hover {
+            transform: translateY(-2px);
+        }
+
+        .logo-text {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+        }
+
+        .hero-logo {
+            width: 350px;
+            max-width: 90%;
+            height: auto;
+            margin: 0 auto 2rem;
+            display: block;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        nav a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--primary-blue);
+        }
+
+        nav a.active {
+            color: var(--primary-blue);
+        }
+
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary-blue);
+            border-radius: 2px;
+        }
+
+        /* Page Sections */
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding-top: 120px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+            opacity: 0.95;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: white;
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            margin-left: 1rem;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary-blue);
+        }
+
+        /* Section Styling */
+        section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 2.8rem;
+            color: var(--dark-blue);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+
+        /* Card Styles */
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
+        .card h3 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.8rem;
+            color: var(--dark-blue);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .card p {
+            font-size: 1.05rem;
+            color: var(--text-gray);
+            line-height: 1.7;
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        /* Game Feature */
+        .game-feature {
+            background: linear-gradient(135deg, var(--light-blue) 0%, white 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            border: 2px solid var(--primary-blue);
+        }
+
+        .game-feature h2 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 2.5rem;
+            color: var(--dark-blue);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.5rem 1.2rem;
+            background: var(--primary-blue);
+            color: white;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Values Grid */
+        .value-item {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .value-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Job Listing */
+        .job-header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            color: white;
+            padding: 3rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+        }
+
+        .job-header h2 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .job-meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .job-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .job-section {
+            margin: 2rem 0;
+        }
+
+        .job-section h3 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.6rem;
+            color: var(--dark-blue);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .job-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .job-section li {
+            padding: 0.7rem 0 0.7rem 2rem;
+            position: relative;
+            font-size: 1.05rem;
+            color: var(--text-gray);
+        }
+
+        .job-section li::before {
+            content: '•';
+            position: absolute;
+            left: 0.5rem;
+            color: var(--primary-blue);
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        /* Contact */
+        .contact-item {
+            text-align: center;
+            padding: 2.5rem;
+            background: var(--cream);
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .contact-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-item h3 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.4rem;
+            color: var(--dark-blue);
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .contact-item a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-blue);
+            color: white;
+            text-align: center;
+            padding: 2.5rem 2rem;
+            margin-top: 5rem;
+        }
+
+        footer p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo-text {
+                font-size: 1.8rem;
+            }
+
+            .logo-img {
+                height: 50px;
+            }
+
+            nav ul {
+                gap: 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .btn-outline {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav ul {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+
+            .logo-section {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a href="#home" class="logo-section" onclick="showPage('home')">
+                <div class="logo-text">OBEE GAMES</div>
+            </a>
+            <ul>
+                <li><a href="#home" class="nav-link active" onclick="showPage('home')">Home</a></li>
+                <li><a href="#about" class="nav-link" onclick="showPage('about')">About</a></li>
+                <li><a href="#careers" class="nav-link" onclick="showPage('careers')">Careers</a></li>
+                <li><a href="#contact" class="nav-link" onclick="showPage('contact')">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <div id="home" class="page active">
+        <div class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <img src="logo.png" alt="OBee Games" class="hero-logo">
+                    <h1>Creating Games That Bring Joy</h1>
+                    <p>OBee Games is a game development company focused on creating fun, engaging experiences. We believe great games start with a simple question: "Is it fun?"</p>
+                    <a href="#careers" class="btn" onclick="showPage('careers')">Join Our Team</a>
+                    <a href="#about" class="btn btn-outline" onclick="showPage('about')">Learn More</a>
+                </div>
+            </div>
+        </div>
+
+        <section class="container">
+            <div class="game-feature">
+                <span class="badge">Now in Development</span>
+                <h2>The Great American Road Trip</h2>
+                <p style="font-size: 1.15rem; color: var(--text-gray); margin-bottom: 2rem;">An epic board game adventure across the United States. Visit iconic destinations, collect experiences, and race to complete your journey. Strategic gameplay meets family-friendly fun in this exciting new title.</p>
+                
+                <div class="grid-3">
+                    <div class="value-item">
+                        <div class="value-icon">🗺️</div>
+                        <h3>Cross-Country Adventure</h3>
+                        <p>Explore cities and landmarks from coast to coast</p>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon">🎲</div>
+                        <h3>Strategic Gameplay</h3>
+                        <p>Plan your route and outsmart your opponents</p>
+                    </div>
+                    <div class="value-item">
+                        <div class="value-icon">👨‍👩‍👧‍👦</div>
+                        <h3>Family Friendly</h3>
+                        <p>Designed for players ages 10 and up</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ABOUT PAGE -->
+    <div id="about" class="page">
+        <section class="container">
+            <h1 class="section-title">About OBee Games</h1>
+            <p class="section-subtitle">We're building a game company that prioritizes fun, quality, and creativity.</p>
+
+            <div class="card">
+                <h3>Our Mission</h3>
+                <p>At OBee Games, every decision starts with one simple question: "Is it fun?" We're committed to creating games that bring people together and create memorable experiences. Quality matters more than speed, and player enjoyment drives everything we do.</p>
+            </div>
+
+            <div class="grid-2" style="margin-top: 3rem;">
+                <div class="card">
+                    <h3>🎯 What We Do</h3>
+                    <p>We develop board games that combine strategic depth with accessible gameplay. Our focus is on creating experiences that are easy to learn but offer lasting replay value.</p>
+                </div>
+                <div class="card">
+                    <h3>💡 Our Values</h3>
+                    <p>We believe in fair compensation, creative freedom, and building a team that's passionate about games. We're looking for people who care about craft and want to make something special.</p>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 2rem;">
+                <h3>Looking Ahead</h3>
+                <p>The Great American Road Trip is our first title, but it's just the beginning. We're building a foundation for a game company that will create many memorable experiences in the years to come.</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- CAREERS PAGE -->
+    <div id="careers" class="page">
+        <section class="container">
+            <h1 class="section-title">Join Our Team</h1>
+            <p class="section-subtitle">Help us create games that people love to play.</p>
+
+            <div class="job-header">
+                <h2>Part-Time Illustrator / Graphic Designer</h2>
+                <div class="job-meta">
+                    <div class="job-meta-item">📍 Remote</div>
+                    <div class="job-meta-item">⏰ Part-Time (~20 hrs/week)</div>
+                    <div class="job-meta-item">💰 $28-30/hour</div>
+                    <div class="job-meta-item">🎓 Students Welcome</div>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="job-section">
+                        <h3>About the Role</h3>
+                        <p>We're seeking our first illustrator to help complete artwork for The Great American Road Trip. This is a foundational role where you'll shape the visual identity of our debut game. We need someone who can create vibrant, family-friendly illustrations that bring the game to life.</p>
+                    </div>
+
+                    <div class="job-section">
+                        <h3>What You'll Create</h3>
+                        <ul>
+                            <li>City and location cards featuring U.S. destinations</li>
+                            <li>Event and action cards with engaging scenarios</li>
+                            <li>Game board elements and visual components</li>
+                            <li>Box art and marketing materials</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="job-section">
+                        <h3>What We're Looking For</h3>
+                        <ul>
+                            <li>Strong illustration and graphic design portfolio</li>
+                            <li>Proficiency in Adobe Creative Suite or similar tools</li>
+                            <li>Ability to create consistent visual style across multiple assets</li>
+                            <li>Passion for games and understanding of what makes game art effective</li>
+                        </ul>
+                    </div>
+
+                    <div class="job-section">
+                        <h3>Compensation</h3>
+                        <ul>
+                            <li>$28-30 per hour (W-2 employee)</li>
+                            <li>Bonus payment when game ships</li>
+                            <li>Performance-based incentives available</li>
+                            <li>Flexible remote work schedule</li>
+                            <li>Portfolio-building opportunity</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 2rem; background: var(--light-blue);">
+                <div class="job-section">
+                    <h3>How to Apply</h3>
+                    <p>Send the following to <strong>careers@obeegames.com</strong>:</p>
+                    <ul>
+                        <li>Your resume or CV</li>
+                        <li>Link to your portfolio (Behance, ArtStation, personal site, etc.)</li>
+                        <li>Brief note about your interest in board game illustration</li>
+                        <li>Your favorite board game and why you love it</li>
+                    </ul>
+                    <p style="margin-top: 1.5rem; font-weight: 600;">Applications reviewed on a rolling basis. We're excited to hear from you!</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- CONTACT PAGE -->
+    <div id="contact" class="page">
+        <section class="container">
+            <h1 class="section-title">Get In Touch</h1>
+            <p class="section-subtitle">We'd love to hear from you.</p>
+
+            <div class="grid-3">
+                <div class="contact-item">
+                    <div class="contact-icon">📧</div>
+                    <h3>General Inquiries</h3>
+                    <a href="mailto:hello@obeegames.com">hello@obeegames.com</a>
+                    <p style="margin-top: 1rem; font-size: 0.95rem; color: var(--text-gray);">For partnerships, press, and general questions</p>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">💼</div>
+                    <h3>Careers</h3>
+                    <a href="mailto:careers@obeegames.com">careers@obeegames.com</a>
+                    <p style="margin-top: 1rem; font-size: 0.95rem; color: var(--text-gray);">For job applications and employment inquiries</p>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">🏢</div>
+                    <h3>Location</h3>
+                    <p style="font-weight: 600; color: var(--text-dark); line-height: 1.8;">
+                        OBee Games, LLC<br>
+                        California, USA
+                    </p>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 4rem; text-align: center;">
+                <h3>Interested in Partnering?</h3>
+                <p>We're open to conversations with distributors, retailers, and content creators. Reach out to hello@obeegames.com with "Partnership" in the subject line.</p>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 OBee Games, LLC. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            const selectedPage = document.getElementById(pageId);
+            selectedPage.classList.add('active');
+            
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            window.scrollTo(0, 0);
+            history.pushState(null, null, '#' + pageId);
+        }
+
+        window.addEventListener('load', () => {
+            const hash = window.location.hash.substring(1);
+            if (hash && ['home', 'about', 'careers', 'contact'].includes(hash)) {
+                const pages = document.querySelectorAll('.page');
+                pages.forEach(page => page.classList.remove('active'));
+                document.getElementById(hash).classList.add('active');
+                
+                const navLinks = document.querySelectorAll('.nav-link');
+                navLinks.forEach(link => {
+                    if (link.getAttribute('href') === '#' + hash) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+            }
+        });
+
+        window.addEventListener('popstate', () => {
+            const hash = window.location.hash.substring(1) || 'home';
+            if (['home', 'about', 'careers', 'contact'].includes(hash)) {
+                const pages = document.querySelectorAll('.page');
+                pages.forEach(page => page.classList.remove('active'));
+                document.getElementById(hash).classList.add('active');
+                
+                const navLinks = document.querySelectorAll('.nav-link');
+                navLinks.forEach(link => {
+                    if (link.getAttribute('href') === '#' + hash) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
